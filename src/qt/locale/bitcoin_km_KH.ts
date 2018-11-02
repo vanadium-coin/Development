@@ -1,4 +1,4 @@
-<TS language="km_KH" version="2.1">
+﻿<TS language="km_KH" version="2.1">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -90,8 +90,8 @@
 <context>
     <name>BitcoinGUI</name>
     <message>
-        <source>Send coins to a Litecoin address</source>
-        <translation>ផ្ញើកាក់ទៅកាន់ អាសយដ្ឋាន Litecoin មួយ</translation>
+        <source>Send coins to a Vanadium address</source>
+        <translation>ផ្ញើកាក់ទៅកាន់ អាសយដ្ឋាន Vanadium មួយ</translation>
     </message>
     <message>
         <source>Wallet</source>

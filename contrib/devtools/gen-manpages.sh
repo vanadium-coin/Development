@@ -4,26 +4,26 @@ TOPDIR=${TOPDIR:-$(git rev-parse --show-toplevel)}
 SRCDIR=${SRCDIR:-$TOPDIR/src}
 MANDIR=${MANDIR:-$TOPDIR/doc/man}
 
-LITECOIND=${LITECOIND:-$SRCDIR/litecoind}
-LITECOINCLI=${LITECOINCLI:-$SRCDIR/litecoin-cli}
-LITECOINTX=${LITECOINTX:-$SRCDIR/litecoin-tx}
-LITECOINQT=${LITECOINQT:-$SRCDIR/qt/litecoin-qt}
+VANADIUMD=${VANADIUMD:-$SRCDIR/vanadiumd}
+VANADIUMCLI=${VANADIUMCLI:-$SRCDIR/vanadium-cli}
+VANADIUMTX=${VANADIUMTX:-$SRCDIR/vanadium-tx}
+VANADIUMQT=${VANADIUMQT:-$SRCDIR/qt/vanadium-qt}
 
-[ ! -x $LITECOIND ] && echo "$LITECOIND not found or not executable." && exit 1
+[ ! -x $VANADIUMD ] && echo "$VANADIUMD not found or not executable." && exit 1
 
 # The autodetected version git tag can screw up manpage output a little bit
-LTCVER=($($LITECOINCLI --version | head -n1 | awk -F'[ -]' '{ print $6, $7 }'))
+VNDVER=($($VANADIUMCLI --version | head -n1 | awk -F'[ -]' '{ print $6, $7 }'))
 
 # Create a footer file with copyright content.
 # This gets autodetected fine for bitcoind if --version-string is not set,
 # but has different outcomes for bitcoin-qt and bitcoin-cli.
 echo "[COPYRIGHT]" > footer.h2m
-$LITECOIND --version | sed -n '1!p' >> footer.h2m
+$VANADIUMD --version | sed -n '1!p' >> footer.h2m
 
-for cmd in $LITECOIND $LITECOINCLI $LITECOINTX $LITECOINQT; do
+for cmd in $VANADIUMD $VANADIUMCLI $VANADIUMTX $VANADIUMQT; do
   cmdname="${cmd##*/}"
-  help2man -N --version-string=${LTCVER[0]} --include=footer.h2m -o ${MANDIR}/${cmdname}.1 ${cmd}
-  sed -i "s/\\\-${LTCVER[1]}//g" ${MANDIR}/${cmdname}.1
+  help2man -N --version-string=${VNDVER[0]} --include=footer.h2m -o ${MANDIR}/${cmdname}.1 ${cmd}
+  sed -i "s/\\\-${VNDVER[1]}//g" ${MANDIR}/${cmdname}.1
 done
 
 rm -f footer.h2m
